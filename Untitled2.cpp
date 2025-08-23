@@ -2,11 +2,13 @@
 
 int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
+int Test_Solve();
 const int SS_INF_ROOTS = -1;
 int main()
 {
     printf ("# Enter a, b, c: ");
     double a = 0, b = 0, c = 0;
+    Test_Solve();
     scanf ("%lg %lg %lg", &a, &b, &c);
     double x1 = 0, x2 = 0;
     int nRoots = SolveSquare (a, b, c, &x1, &x2);
@@ -52,5 +54,14 @@ int SolveSquare (double a, double b, double c,
         *x1 = (-b - sqrt_d) / (2*a);
         *x2 = (-b + sqrt_d) / (2*a);
         return 2;
+    }
+}
+int Test_Solve( 1, -5, 6, &x1, &x2)
+{
+ double x1, x2 = 0;
+ int nRoots = Test_Solve( 1, -5, 6, &x1, &x2);
+ if (!( nRoots == 2 && x1 == 2 && x2 == 3))
+    {
+    printf ( "FAILED: Test_Solve( 1, -5, 6, &x1, &x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", x1, x2);
     }
 }
