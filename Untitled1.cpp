@@ -32,7 +32,7 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
         return 1;
        }
 }
-   if (d > 0) {
+  if (d > 0) {
        *x1 = ( - b + sqrt_d ) / (2*a);
        *x2 = ( - b - sqrt_d ) / (2*a);
        return 2;
@@ -41,7 +41,7 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
        *x1 = *x2 = - b / (2 * a);
        return 1;
      }
- if (d < 0) {
+  if (d < 0) {
      printf ( "This equations haven't any solves");
      return 0;
  }
