@@ -12,11 +12,20 @@ int main ()
 double a = 0, b = 0, c = 0;
 double x1 = 0, x2 = 0;
 scanf("%lg %lg %lg", &a, &b, &c);
-printf ("%lf /n, %lf /n", &x1, &x2);
+printf ("%lf \n, %lf \n", &x1, &x2);
 }
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
 double solve_equations (double a, double b, double c, double *x1, double *x2)
 {
+  assert (std::isfinite (a));
+  assert (std::isfinite (b));
+  assert (std::isfinite (c));
+  
+  assert (x1 != NULL);
+  assert (x2 != NULL);
+  assert ( x1 != x2);
   int d = b*b - 4*a*c;
   if ( a == 0) {
       if ( b == 0)  {
@@ -40,6 +49,6 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
  if (d < 0) {
      printf ( "This equations haven't any solves");
      return 0;
- } /* ðåøåíèå ñàìîãî óðàâíåíèÿ*/
+ }
 }
  
