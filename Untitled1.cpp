@@ -21,8 +21,12 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
   if ( a == 0) {
       if ( b == 0)  {
           return (c == 0) ? INF : 0;
-          /* ïðîâåðêà íà áåñêîíå÷íîå êîëâî ðåøåíèé*/
-}
+        }
+      else 
+      {
+        *x1 = - c / b;
+        return 1;
+       }
 }
    if (d > 0) {
        *x1 = ( - b + sqrt(d) ) / (2*a);
