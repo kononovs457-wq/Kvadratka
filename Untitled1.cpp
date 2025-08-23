@@ -20,9 +20,8 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
   int d = b*b - 4*a*c;
   if ( a == 0) {
       if ( b == 0)  {
-          if ( c == 0) {
-              return INF: 0; /* ïðîâåðêà íà áåñêîíå÷íîå êîëâî ðåøåíèé*/
-}
+          return (c == 0) ? INF : 0;
+          /* ïðîâåðêà íà áåñêîíå÷íîå êîëâî ðåøåíèé*/
 }
 }
    if (d > 0) {
@@ -39,4 +38,4 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
      return 0;
  } /* ðåøåíèå ñàìîãî óðàâíåíèÿ*/
 }
- }
+ 
