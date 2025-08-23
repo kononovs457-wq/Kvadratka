@@ -12,27 +12,29 @@ int main ()
 double a = 0, b = 0, c = 0;
 double x1 = 0, x2 = 0;
 scanf("%lg %lg %lg", &a, &b, &c);
-printf ("%lf \n, %lf \n", &x1, &x2);
+solve_equations( a, b, c, &x1, &x2 );
+printf ("x1 = %lg, x2 = %lg \n", &x1, &x2);
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 
 double solve_equations (double a, double b, double c, double *x1, double *x2)
 {
-  int d = b*b - 4*a*c;
+  double d = b*b - 4*a*c;
+  double sqrt_d = sqrt(d);
   if ( a == 0) {
       if ( b == 0)  {
           return (c == 0) ? INF : 0;
         }
-      else 
+      else
       {
         *x1 = - c / b;
         return 1;
        }
 }
    if (d > 0) {
-       *x1 = ( - b + sqrt(d) ) / (2*a);
-       *x2 = ( - b - sqrt(d) ) / (2*a);
+       *x1 = ( - b + sqrt_d ) / (2*a);
+       *x2 = ( - b - sqrt_d ) / (2*a);
        return 2;
 }
   if (d == 0) {
@@ -44,4 +46,3 @@ double solve_equations (double a, double b, double c, double *x1, double *x2)
      return 0;
  }
 }
- 
