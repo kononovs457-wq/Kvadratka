@@ -12,8 +12,6 @@ int main()
     printf ("# Enter a, b, c: ");
     double a = 0, b = 0, c = 0;
     Test_Solve();
-	FILE *myfile;
-	myfile = fopen("file.txt", "r")
     scanf ("%lg %lg %lg", &a, &b, &c);
     double x1 = 0, x2 = 0;
     int nRoots = SolveSquare (a, b, c, &x1, &x2);
