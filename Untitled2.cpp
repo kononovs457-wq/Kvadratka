@@ -66,5 +66,10 @@ int Test_Solve()
  if (!( nRoots == 2 && x1 == 2 && x2 == 3))
     {
     printf ( "FAILED: Test_Solve( 1, -5, 6, &x1, &x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", x1, x2);
+	return 0;
     }
+ else
+{
+ return 1;
+}
 }
