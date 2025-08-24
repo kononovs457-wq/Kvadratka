@@ -4,11 +4,16 @@ int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
 int Test_Solve();
 const int SS_INF_ROOTS = -1;
+
+
+
 int main()
 {
     printf ("# Enter a, b, c: ");
     double a = 0, b = 0, c = 0;
     Test_Solve();
+	FILE *myfile;
+	myfile = fopen(
     scanf ("%lg %lg %lg", &a, &b, &c);
     double x1 = 0, x2 = 0;
     int nRoots = SolveSquare (a, b, c, &x1, &x2);
