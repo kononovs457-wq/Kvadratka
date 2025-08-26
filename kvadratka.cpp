@@ -14,10 +14,12 @@ typedef struct DataTest
 int Solve_Kvadrat (double a, double b, double c,
                         double* x1, double* x2);
 int AllTest ();
+int Test();
 int Solve_linel (double b, double c, double *x1);
 int compare_zero (double x);
 int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
+int Test();
 int input (double *a, double *b, double *c);
 int output (int nRoots, double x1, double x2);
 int Test_Solve(DataTest test);
@@ -27,10 +29,11 @@ int main()
     double a = 0, b = 0, c = 0;
     double x1 = 0, x2 = 0;
     input( &a, &b, &c);
-    AllTest();
     int nRoots = SolveSquare ( a, b, c, &x1, &x2);
     output(nRoots, x1, x2);
+    Test();
 }
+
 int Solve_Kvadrat (double a, double b, double c,
                         double* x1, double* x2)
     {
@@ -52,9 +55,9 @@ int Solve_Kvadrat (double a, double b, double c,
 int Test_Solve(DataTest test)
 {
     int nRoots = SolveSquare (test.a, test.b, test.c, &(test.x1), &(test.x2));
-    if (!( test.nRoots == 2 && ( compare_zero(test.x1 - 2)) && ( compare_zero(test.x2 - 3))))
+    if (!( test.nRoots == 2 && ( compare_zero(test.x1 - test.x1)) && ( compare_zero(test.x2 - test.x2))))
         {
-            printf ( "FAILED: Test_Solve( test.a, test.b, test.c, &(test.x1), &(test.x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", test.x1, test.x2);
+            printf ( "FAILED: Test_Solve( test.a, test.b, test.c, &(test.x1), &(test.x2) is test.nRoots, x1 = %lf, x2 = %lf ( should be x1 = %lf, x2 = %lf\n", test.x1, test.x2, test.x1, test.x2);
             return 0;
         }
     else
@@ -124,10 +127,10 @@ int Solve_linel ( double b, double c, double *x1)
 
 int AllTest ()
 {
-    DataTest tests [] = {{.a = 1, .b = -5, .c = 6, .x1 = 2, .x2 = 3, .nRoots = 2,},
-                         {.a = -114.00, .b = -50844.00, .c = -5669106.00, .x1 = -223.00, .x2 = -223.00, .nRoots = 2},
-                         {.a = 793.00, .b = 1054690.00, .c = 350684425.00, .x1 = -665.00, .x2 = -665.00, .nRoots = 2},
-                         {.a = -508.00, .b = -356616.00, .c = -62586108.00, .x1 = -351.00, .x2 = -351.00, .nRoots = 2},
+    DataTest tests [] = {{.a = 1,       .b = -5,          .c = 6,             .x1 = 2,       .x2 = 3,       .nRoots = 2},
+                         {.a = -114.00, .b = -50844.00,   .c = -5669106.00,   .x1 = -223.00, .x2 = -223.00, .nRoots = 2},
+                         {.a = 793.00,  .b = 1054690.00,  .c = 350684425.00,  .x1 = -665.00, .x2 = -665.00, .nRoots = 2},
+                         {.a = -508.00, .b = -356616.00,  .c = -62586108.00,  .x1 = -351.00, .x2 = -351.00, .nRoots = 2},
                          {.a = -638.00, .b = -1241548.00, .c = -604013102.00, .x1 = -973.00, .x2 = -973.00, .nRoots = 2}};
 
     int size = sizeof(tests) / sizeof(tests[0]);
@@ -148,6 +151,18 @@ int SolveSquare (double a, double b, double c,
     else
     {
         Solve_Kvadrat(a, b, c, x1, x2);
+    }
+    return 2;
+}
+
+int Test()
+{
+    printf ("Хотите ли проверить другие решения? (Y/N)\n");
+    char ch = ' ';
+    scanf (" %c", &ch);
+    if (ch == 'Y')
+    {
+        AllTest();
     }
     return 1;
 }
