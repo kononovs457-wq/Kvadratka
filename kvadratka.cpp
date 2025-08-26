@@ -4,6 +4,7 @@ const int SS_INF_ROOTS = -1;
 const double ep = 1e-9;
 
 typedef struct DataTest;
+int Solve_linel (double a, double b, double c, double *x1);
 int compare_zero (double x);
 int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
@@ -78,12 +79,12 @@ int output (int nRoots, double x1, double x2)
 int input (double *a, double *b, double *c)
 {
     printf ("# Enter a, b, c: ");
-    while (scanf ("%lg %lg %lg", &a, &b, &c) != 3)
+    while (scanf ("%lg %lg %lg", a, b, c) != 3)
         {
-            printf ("¬ведите новые коэффициенты : ");
+            printf ("¬ведите новые коэффициеты : ");
             while (getchar() != '\n');
         }
-    printf ("¬ведЄнные коэффициенты : a = %lg, b = %lg, c = %lg", a, b, c);
+    printf ("¬ведЄнные коэффициенты : a = %lg, b = %lg, c = %lg \n", *a, *b, *c);
     return 1;
 }
 
@@ -110,7 +111,7 @@ int Solve_linel (double a, double b, double c, double *x1)
                         return 1;
                     }
             }
-    }
+}
 
 /*typedef struct DataTest
     {
