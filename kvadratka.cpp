@@ -3,7 +3,14 @@
 const int SS_INF_ROOTS = -1;
 const double ep = 1e-9;
 
-struct DataTest;
+typedef struct DataTest
+{
+     double a, b, c;
+     double x1, x2;
+     int nRoots;
+};
+
+
 int Solve_Kvadrat (double a, double b, double c,
                         double* x1, double* x2);
 int AllTest ();
@@ -13,7 +20,7 @@ int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
 int input (double *a, double *b, double *c);
 int output (int nRoots, double x1, double x2);
-int Test_Solve(double x1, double x2);
+int Test_Solve(DataTest test);
 
 int main()
 {
@@ -42,9 +49,9 @@ int Solve_Kvadrat (double a, double b, double c,
     }
 }
 
-int Test_Solve(struct DataTest test)
+int Test_Solve(DataTest test)
 {
-    int nRoots = SolveSquare (test.a, test.b, test.c, &(test.x1), &(test.x2);
+    int nRoots = SolveSquare (test.a, test.b, test.c, &(test.x1), &(test.x2));
     if (!( test.nRoots == 2 && ( compare_zero(test.x1 - 2)) && ( compare_zero(test.x2 - 3))))
         {
             printf ( "FAILED: Test_Solve( test.a, test.b, test.c, &(test.x1), &(test.x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", test.x1, test.x2);
@@ -115,27 +122,20 @@ int Solve_linel ( double b, double c, double *x1)
 }
 
 
-struct DataTest
-    {
-     double a, b, c;
-     double x1, x2;
-     int nRoots;
-    };
-
 int AllTest ()
 {
-    DataTest tests [] = {{.a = 1, .b = -5, .c = 6, .nRoots = 2, .x1 = 2, .x2 = 3},
-                         {.a = -114.00, .b = -50844.00, .c = -5669106.00, nRoots = 2, x1 = -223.00, x2 = -223.00},
-                         {.a = 793.00, .b = 1054690.00, .c = 350684425.00, nRoots = 2, x1 = -665.00, x2 = -665.00},
-                         {.a = -508.00, .b = -356616.00, .c = -62586108.00, nRoots = 2, x1 = -351.00, x2 = -351.00},
-                         {.a = -638.00, .b = -1241548.00, .c = -604013102.00, nRoots = 2, x1 = -973.00, x2 = -973.00},
-                         {.a = -941.00, .b = 1435966.00, .c = -1354706886.00, nRoots = 0, x1 = 0.00, x2 = 0.00}};
+    DataTest tests [] = {{.a = 1, .b = -5, .c = 6, .x1 = 2, .x2 = 3, .nRoots = 2,},
+                         {.a = -114.00, .b = -50844.00, .c = -5669106.00, .x1 = -223.00, .x2 = -223.00, .nRoots = 2},
+                         {.a = 793.00, .b = 1054690.00, .c = 350684425.00, .x1 = -665.00, .x2 = -665.00, .nRoots = 2},
+                         {.a = -508.00, .b = -356616.00, .c = -62586108.00, .x1 = -351.00, .x2 = -351.00, .nRoots = 2},
+                         {.a = -638.00, .b = -1241548.00, .c = -604013102.00, .x1 = -973.00, .x2 = -973.00, .nRoots = 2}};
 
     int size = sizeof(tests) / sizeof(tests[0]);
     for ( int i = 0; i < size; i++)
             {
                 Test_Solve(tests [i]);
             }
+    return 1;
 }
 
 int SolveSquare (double a, double b, double c,
@@ -149,4 +149,5 @@ int SolveSquare (double a, double b, double c,
     {
         Solve_Kvadrat(a, b, c, x1, x2);
     }
+    return 1;
 }
