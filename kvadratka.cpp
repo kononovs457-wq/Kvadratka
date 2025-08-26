@@ -3,8 +3,11 @@
 const int SS_INF_ROOTS = -1;
 const double ep = 1e-9;
 
-typedef struct DataTest;
-int Solve_linel (double a, double b, double c, double *x1);
+struct DataTest;
+int Solve_Kvadrat (double a, double b, double c,
+                        double* x1, double* x2);
+int AllTest ();
+int Solve_linel (double b, double c, double *x1);
 int compare_zero (double x);
 int SolveSquare (double a, double b, double c,
                         double* x1, double* x2);
@@ -17,15 +20,15 @@ int main()
     double a = 0, b = 0, c = 0;
     double x1 = 0, x2 = 0;
     input( &a, &b, &c);
-    //Test_Solve( x1, x2);
+    AllTest();
     int nRoots = SolveSquare ( a, b, c, &x1, &x2);
     output(nRoots, x1, x2);
 }
-int SolveSquare (double a, double b, double c,
+int Solve_Kvadrat (double a, double b, double c,
                         double* x1, double* x2)
     {
     double d = b*b - 4*a*c;
-    if ( fabs(d) < ep)
+    if (compare_zero(d))
     {
         *x1 = *x2 = - b / (2*a);
         return 1;
@@ -38,43 +41,43 @@ int SolveSquare (double a, double b, double c,
         return 2;
     }
 }
-int Test_Solve(double x1, double x2)
+
+int Test_Solve(struct DataTest test)
 {
- int nRoots = SolveSquare ( 1, -5, 6, &x1, &x2);
- if (!( nRoots == 2 && ( fabs(x1 - 2) < ep) && ( fabs(x2 - 3) < ep)))
-    {
-    printf ( "FAILED: Test_Solve( 1, -5, 6, &x1, &x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", x1, x2);
-	return 0;
-    }
- else
-{
- return 1;
-}
-return 0;
+    int nRoots = SolveSquare (test.a, test.b, test.c, &(test.x1), &(test.x2);
+    if (!( test.nRoots == 2 && ( compare_zero(test.x1 - 2)) && ( compare_zero(test.x2 - 3))))
+        {
+            printf ( "FAILED: Test_Solve( test.a, test.b, test.c, &(test.x1), &(test.x2) is 2, x1 = %lf, x2 = %lf ( should be x1 = 2, x2 = 3\n", test.x1, test.x2);
+            return 0;
+        }
+    else
+        {
+            return 1;
+        }
+    return 0;
 }
 
 int output (int nRoots, double x1, double x2)
-    {
-
+{
     switch (nRoots)
         {
-        case 0: printf ("No roots\n");
+            case 0: printf ("No roots\n");
                 break;
 
-        case 1: printf ("x = %lg\n", x1);
+            case 1: printf ("x = %lg\n", x1);
                 break;
 
-        case 2: printf ("x1 = %lg, x2 = %lg\n", x1, x2);
+            case 2: printf ("x1 = %lg, x2 = %lg\n", x1, x2);
                 break;
 
-        case SS_INF_ROOTS: printf ("Any number");
+            case SS_INF_ROOTS: printf ("Any number");
                 break;
 
-        default: printf ("main(): ERROR: nRoots = %d\n",
-                        nRoots);
-        }
+            default: printf ("main(): ERROR: nRoots = %d\n",
+                            nRoots);
+            }
     return 0;
-    }
+}
 
 int input (double *a, double *b, double *c)
 {
@@ -90,33 +93,60 @@ int input (double *a, double *b, double *c)
 
 int compare_zero (double x)
 {
-   if (fabs(x) > ep)
+   if (fabs(x) < ep)
         {
             return 1;
         }
     return 0;
 }
 
-int Solve_linel (double a, double b, double c, double *x1)
-    {
-        if ( fabs(a) < ep)
-            {
-                if ( fabs(b) < ep)
-                    {
-                        return ( fabs(c) < ep)? SS_INF_ROOTS : 0;
-                    }
-                else /* if (b != 0) */
-                    {
-                        *x1 = - c / b;
-                        return 1;
-                    }
-            }
+int Solve_linel ( double b, double c, double *x1)
+
+{
+    if (compare_zero(b))
+        {
+            return (compare_zero(c))? SS_INF_ROOTS : 0;
+        }
+    else /* if (b != 0) */
+        {
+            *x1 = - c / b;
+            return 1;
+        }
 }
 
-/*typedef struct DataTest
+
+struct DataTest
     {
      double a, b, c;
      double x1, x2;
      int nRoots;
+    };
+
+int AllTest ()
+{
+    DataTest tests [] = {{.a = 1, .b = -5, .c = 6, .nRoots = 2, .x1 = 2, .x2 = 3},
+                         {.a = -114.00, .b = -50844.00, .c = -5669106.00, nRoots = 2, x1 = -223.00, x2 = -223.00},
+                         {.a = 793.00, .b = 1054690.00, .c = 350684425.00, nRoots = 2, x1 = -665.00, x2 = -665.00},
+                         {.a = -508.00, .b = -356616.00, .c = -62586108.00, nRoots = 2, x1 = -351.00, x2 = -351.00},
+                         {.a = -638.00, .b = -1241548.00, .c = -604013102.00, nRoots = 2, x1 = -973.00, x2 = -973.00},
+                         {.a = -941.00, .b = 1435966.00, .c = -1354706886.00, nRoots = 0, x1 = 0.00, x2 = 0.00}};
+
+    int size = sizeof(tests) / sizeof(tests[0]);
+    for ( int i = 0; i < size; i++)
+            {
+                Test_Solve(tests [i]);
+            }
+}
+
+int SolveSquare (double a, double b, double c,
+                        double* x1, double* x2)
+{
+    if (compare_zero(a))
+    {
+        Solve_linel(b, c, x1);
     }
- */
+    else
+    {
+        Solve_Kvadrat(a, b, c, x1, x2);
+    }
+}
