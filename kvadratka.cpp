@@ -14,7 +14,6 @@ int Solve_Kvadrat (double a, double b, double c,
                         double* x1, double* x2);
 int All_Test ();
 int All_Solve();
-//int Test();
 int Solve_linel (double b, double c, double *x1);
 int compare_zero (double x);
 int Solve_Square (double a, double b, double c,
@@ -27,27 +26,32 @@ int Choice();
 
 int main()
 {
-    int Choice();
+    Choice();
+    return 0;
 }
 
 int Solve_Kvadrat (double a, double b, double c,
-                        double* x1, double* x2) {
+                        double* x1, double* x2)
+{
     double d = b*b - 4*a*c;
-    if (compare_zero(d)) {
+    if (compare_zero(d))
+    {
         *x1 = *x2 = - b / (2*a);
+
         return 1;
     }
-    else {
+    else
+    {
         double sqrt_d = sqrt (d);
         *x1 = (-b - sqrt_d) / (2*a);
         *x2 = (-b + sqrt_d) / (2*a);
+
         return 2;
     }
 }
 
 int Test_Solve(DataTest test)
 {
-    int nRoots = Solve_Square (test.a, test.b, test.c, &(test.x1), &(test.x2));
     if (!(test.nRoots == 2 &&
          (compare_zero(test.x1 - test.x1)) &&
          (compare_zero(test.x2 - test.x2))))
@@ -93,7 +97,8 @@ int input (double *a, double *b, double *c)
     while (scanf ("%lg %lg %lg", a, b, c) != 3)
         {
             printf ("Введите новые коэффициеты : ");
-            while (getchar() != '\n');
+            while (getchar() != '\n')
+                ;
         }
     printf ("Введённые коэффициенты : a = %lg, b = %lg, c = %lg \n", *a, *b, *c);
     return 1;
@@ -124,16 +129,30 @@ int Solve_linel ( double b, double c, double *x1)
 
 int All_Test ()
 {
-    DataTest tests [] = {{.a =  1,      .b = -5,          .c =  6,            .x1 =  2,      .x2 =  3,      .nRoots = 2},
-                         {.a = -114.00, .b = -50844.00,   .c = -5669106.00,   .x1 = -223.00, .x2 = -223.00, .nRoots = 2},
-                         {.a =  793.00, .b =  1054690.00, .c =  350684425.00, .x1 = -665.00, .x2 = -665.00, .nRoots = 2},
-                         {.a = -508.00, .b = -356616.00,  .c = -62586108.00,  .x1 = -351.00, .x2 = -351.00, .nRoots = 2},
-                         {.a = -638.00, .b = -1241548.00, .c = -604013102.00, .x1 = -973.00, .x2 = -973.00, .nRoots = 2}};
+    FILE *f = fopen("tests.txt", "r");
+    if (f == NULL)
+    {
+        perror("Ошибка открытия файла");
+    }
+    DataTest tests [6] = {};
 
     int size = sizeof(tests) / sizeof(tests[0]);
-    for ( int i = 0; i < size; i++) {
-        Test_Solve(tests[i]);
+    int i = 0;
+    while ((i < size) && ((fscanf(f, " %lg %lg %lg %lg %lg %d",
+                           &(tests[i].a),
+                           &(tests[i].b),
+                           &(tests[i].c),
+                           &(tests[i].x1),
+                           &(tests[i].x2),
+                           &(tests[i].nRoots))) == 6))
+    {
+        i++;
     }
+    for ( int j = 0; j < size; j++)
+    {
+        Test_Solve(tests[j]);
+    }
+    printf ("Все тесты пройдены успешно!");
     return 1;
 }
 
@@ -158,21 +177,31 @@ int All_Solve()
     input( &a, &b, &c);
     int nRoots = Solve_Square ( a, b, c, &x1, &x2);
     output(nRoots, x1, x2);
+    return 1;
 }
 
 int Choice()
 {
     int ch = 0;
     printf ("Эта программа может решать квадратные уравнения.\
-            Решать уравнение с вашими коэффициентами или проверить программу?(1/2)\n");
-    int scan = 0;
-    while ((scan = scanf (" %d", &ch)) != 1);
+             \nРешать уравнение с вашими коэффициентами или проверить программу?\
+             \nИли введите 3 для выхода из программы (1/2/3)\n");
+    do
     {
-        All_Test();
-        while (getchar() != '\n');
-        printf ("Все тесты пройдены, ввести новые коэффициенты или \
-                 ещё раз прогнать тесты?(1/2)\n");
-    }
-    All_Solve();
+        scanf (" %d", &ch);
+        switch (ch)
+            {
+                case 1: All_Solve();
+                        break;
+
+                case 2: All_Test();
+
+                case 3: break;
+
+                default: printf ("ERROR CHOISE PLEASE NEW DGIGIT\n");
+                while (getchar() != '\n');
+            }
+    } while ( ch != 3);
+    while (getchar() != '\n');
     return 1;
 }
