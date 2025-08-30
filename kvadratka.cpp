@@ -24,8 +24,12 @@ int Test_Solve(DataTest test);
 int Choice();
 
 
-int main()
+int main(int argc, char *argv[])
 {
+    for ( int i = 0; i < argc; i++)
+    {
+        printf (" %s\n", argv[i]);
+    }
     Choice();
     return 0;
 }
@@ -134,7 +138,7 @@ int All_Test ()
     {
         perror("Ошибка открытия файла");
     }
-    DataTest tests [6] = {};
+    DataTest tests [] = {};
 
     int size = sizeof(tests) / sizeof(tests[0]);
     int i = 0;
